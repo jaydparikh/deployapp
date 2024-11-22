@@ -10,8 +10,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def homepage(): #called when root URL is accessed
-#    return "<p> Hello, World! </p>"
-    #add_Product()
     get_Product()
     return render_template("homepage.html")
 
@@ -41,6 +39,17 @@ def products_get():
 def products_post():
     return "<h> Product Post </h>"
 
+@app.get("/addproducts/")
+def product_add():
+    return render_template("addProduct.html")
+
+@app.post("/addproducts/")
+def product_post():
+    name = request.form.get('name')
+    price = int(request.form.get('price'))
+    quantity = int(request.form.get('quantity'))
+    add_Product(name, price, quantity)
+    return f"<h> Product Added: {name} </h>"
 
 @app.route("/products/<int:id>")
 def product(id): 
@@ -76,8 +85,8 @@ def about(subpath):
 
 
 ## <add text>
-def add_Product():
-    product = Products(name = "Products1", price = 20, quantity = 10)
+def add_Product(name, price, quantity):
+    product = Products(name = name, price = price, quantity = quantity)
     session.add(product)
     session.commit()
 

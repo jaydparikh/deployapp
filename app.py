@@ -52,6 +52,13 @@ def product_post():
     add_Product(name, price, quantity)
     return f"<h> Product Added: {name} </h>"
 
+@app.get("/deleteproduct/<int:productid>")
+def deleteProduct(productid):
+    product = session.query(Products).filter_by(id=productid).first()
+    session.delete(product)
+    session.commit()
+    return f"<h> Product Deleted: {productid} </h>"
+
 @app.route("/products/<int:id>")
 def product(id): 
     return f"<h1> Product: #{escape(id)} </h1>" #escape is used to prevent attacks

@@ -57,7 +57,7 @@ def deleteProduct(productid):
     product = session.query(Products).filter_by(id=productid).first()
     session.delete(product)
     session.commit()
-    return f"<h> Product Deleted: {productid} </h>"
+    return f'<h> Product Deleted: {productid} </h><br><a href="/products/">Go to Products</a>'
 
 @app.route("/products/<int:id>")
 def product(id): 
